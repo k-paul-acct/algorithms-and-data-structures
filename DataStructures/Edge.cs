@@ -1,3 +1,8 @@
 ﻿namespace DataStructures;
 
-public record Edge(Node StartNode, Node EndNode, double Weight);
+public struct Edge<T>
+{
+    private Node<T> StartNode;
+    private Node<T> EndNode;
+    private double Weight;
+};

@@ -1,3 +1,7 @@
 ﻿namespace DataStructures;
 
-public record Node(string Name);
+internal struct Node<T>
+{
+    public int HashCode;
+    public T Value;
+}

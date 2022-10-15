@@ -1,59 +1,52 @@
-﻿using Algorithms;
-using DataStructures;
+﻿using DataStructures;
 
-var graph = new Graph();
-var a = new Node("A");
-var b = new Node("B");
-var c = new Node("C");
-var d = new Node("D");
-var e = new Node("E");
-var f = new Node("F");
-var g = new Node("G");
+var graph = new Graph<string>();
 
-graph.AddNode(a);
-graph.AddNode(b);
-graph.AddNode(c);
-graph.AddNode(d);
-graph.AddNode(e);
-graph.AddNode(f);
-graph.AddNode(g);
+graph.AddNode("a");
+graph.AddNode("b");
+graph.AddNode("c");
+graph.AddNode("d");
+graph.AddNode("e");
+graph.AddNode("f");
+graph.AddNode("g");
 
-graph.AddEdge(new Edge(a, b, 2));
-graph.AddEdge(new Edge(b, a, 2));
+graph.AddEdge("a", "b");
+graph.AddEdge("b", "a");
 
-graph.AddEdge(new Edge(a, c, 3));
-graph.AddEdge(new Edge(c, a, 3));
+graph.AddEdge("a", "c");
+graph.AddEdge("c", "a");
 
-graph.AddEdge(new Edge(a, d, 6));
-graph.AddEdge(new Edge(d, a, 6));
+graph.AddEdge("a", "d");
+graph.AddEdge("d", "a");
 
-graph.AddEdge(new Edge(b, c, 4));
-graph.AddEdge(new Edge(c, b, 4));
+graph.AddEdge("b", "c");
+graph.AddEdge("c", "b");
 
-graph.AddEdge(new Edge(b, e, 9));
-graph.AddEdge(new Edge(e, b, 9));
+graph.AddEdge("b", "e");
+graph.AddEdge("e", "b");
 
-graph.AddEdge(new Edge(c, d, 1));
-graph.AddEdge(new Edge(d, c, 1));
+graph.AddEdge("c", "d");
+graph.AddEdge("d", "c");
 
-graph.AddEdge(new Edge(c, e, 7));
-graph.AddEdge(new Edge(e, c, 7));
+graph.AddEdge("c", "e");
+graph.AddEdge("e", "c");
 
-graph.AddEdge(new Edge(c, f, 6));
-graph.AddEdge(new Edge(f, c, 6));
+graph.AddEdge("c", "f");
+graph.AddEdge("f", "c");
 
-graph.AddEdge(new Edge(d, f, 4));
-graph.AddEdge(new Edge(f, d, 4));
+graph.AddEdge("d", "f");
+graph.AddEdge("f", "d");
 
-graph.AddEdge(new Edge(e, f, 1));
-graph.AddEdge(new Edge(f, e, 1));
+graph.AddEdge("e", "f");
+graph.AddEdge("f", "e");
 
-graph.AddEdge(new Edge(e, g, 5));
-graph.AddEdge(new Edge(g, e, 5));
+graph.AddEdge("e", "g");
+graph.AddEdge("g", "e");
 
-graph.AddEdge(new Edge(f, g, 8));
-graph.AddEdge(new Edge(g, f, 8));
+graph.AddEdge("f", "g");
+graph.AddEdge("g", "f");
 
-var path = graph.Dijkstra(a, g);
+// var path = graph.Dijkstra(a, g);
 
-foreach (var n in path) Console.Write($"{n.Name} -> ");
+foreach (var x in graph.Neighbors("c")) Console.Write($"{x}, ");
+Console.WriteLine();
