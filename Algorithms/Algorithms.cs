@@ -4,19 +4,25 @@ namespace Algorithms;
 
 public static class Algorithms
 {
-    /**
-     * Returns the list of nodes that form the path from startNode to endNode.
-     */
-    public static ICollection<Node> Dijkstra(this Graph graph, Node startNode, Node endNode)
+    /*/// <summary>
+    ///     Returns the <see cref="IEnumerable{T}"/> that form the path with min weight from startNode to endNode.
+    /// </summary>
+    /// <param name="graph"></param>
+    /// <param name="startNode">start node for algorithm.</param>
+    /// <param name="endNode">end node for algorithm.</param>
+    /// <typeparam name="TSource"></typeparam>
+    /// <returns></returns>
+    public static IEnumerable<TSource> Dijkstra<TSource>(this Graph<TSource> graph, TSource startNode, TSource endNode)
+        where TSource : notnull 
     {
-        var queue = new HashSet<Node>();
-        var distances = new Dictionary<Node, double>();
-        var parents = new Dictionary<Node, Node?>();
+        var queue = new HashSet<TSource>();
+        var distances = new Dictionary<TSource, double>();
+        var parents = new Dictionary<TSource, TSource?>();
 
         foreach (var n in graph.Nodes)
         {
             queue.Add(n);
-            parents.Add(n, null);
+            parents.Add(n, default);
             distances.Add(n, double.PositiveInfinity);
         }
 
@@ -25,9 +31,8 @@ public static class Algorithms
         while (queue.Count != 0)
         {
             var n = distances.Where(x => queue.Contains(x.Key)).MinBy(x => x.Value).Key;
-            // var n = distances.MinBy(x => x.Value).Key;
             queue.Remove(n);
-            if (n == endNode) break;
+            if (n.Equals(endNode)) break;
 
             foreach (var e in graph.AdjacencyList(n))
             {
@@ -52,5 +57,57 @@ public static class Algorithms
         s.Reverse();
 
         return s;
+    }*/
+
+    /// <summary>
+    ///     Preorder depth first search on the <see cref="Graph{TSource}" />.
+    /// </summary>
+    /// <param name="graph">graph for algorithm.</param>
+    /// <param name="fromNode">start node for searching.</param>
+    /// <returns><see cref="IEnumerable{TSource}" /> in proper order.</returns>
+    public static IEnumerable<TSource> DepthFirstSearch<TSource>(this Graph<TSource> graph, TSource fromNode)
+        where TSource : notnull
+    {
+        var marked = graph.Nodes.ToDictionary(x => x, _ => false);
+        var stack = new Stack<TSource>();
+        stack.Push(fromNode);
+        while (stack.Count > 0)
+        {
+            var n = stack.Pop();
+            if (marked[n]) continue;
+            yield return n;
+            marked[n] = true;
+            foreach (var x in graph.Neighbors(n))
+            {
+                if (marked[x]) continue;
+                stack.Push(x);
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Breadth first search on the <see cref="Graph{TSource}" />.
+    /// </summary>
+    /// <param name="graph">graph for algorithm.</param>
+    /// <param name="fromNode">start node for searching.</param>
+    /// <returns><see cref="IEnumerable{TSource}" /> in proper order.</returns>
+    public static IEnumerable<TSource> BreadthFirstSearch<TSource>(this Graph<TSource> graph, TSource fromNode)
+        where TSource : notnull
+    {
+        var marked = graph.Nodes.ToDictionary(x => x, _ => false);
+        var queue = new Queue<TSource>();
+        queue.Enqueue(fromNode);
+        while (queue.Count > 0)
+        {
+            var n = queue.Dequeue();
+            if (marked[n]) continue;
+            yield return n;
+            marked[n] = true;
+            foreach (var x in graph.Neighbors(n))
+            {
+                if (marked[x]) continue;
+                queue.Enqueue(x);
+            }
+        }
     }
 }
