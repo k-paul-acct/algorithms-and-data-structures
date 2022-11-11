@@ -76,5 +76,3 @@ graph3.AddUndirectedEdge(3, 5);
 
 foreach (var x in graph3.BreadthFirstSearch(0)) Console.Write($"{x} -> ");
 Console.WriteLine();
-
-Console.WriteLine();

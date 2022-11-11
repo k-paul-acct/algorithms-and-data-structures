@@ -1,11 +1,10 @@
-﻿using Algorithms;
-using DataStructures;
+﻿using DataStructures;
 
 namespace Graph;
 
 public class Plane
 {
-    private readonly DataStructures.Graph _graph = new();
+    private readonly DataStructures.Graph<string> _graph = new();
 
     public List<PlaneElem> PlaneNodes { get; } = new();
     public List<PlaneEdge> PlaneEdges { get; } = new();
@@ -17,16 +16,15 @@ public class Plane
 
     public void AddPlaneNode(string name, int x, int y)
     {
-        var node = new Node(name);
-        PlaneNodes.Add(new PlaneElem(node, new Point(x, y)));
-        _graph.AddNode(node);
+        PlaneNodes.Add(new PlaneElem(name, new Point(x, y)));
+        _graph.AddNode(name);
     }
 
     public void AddPlaneEdge(PlaneElem startNode, PlaneElem endNode, double weigth)
     {
-        var edge = new Edge(startNode.Node, endNode.Node, weigth);
+        var edge = new Edge<>(startNode.Node, endNode.Node, weigth);
         PlaneEdges.Add(new PlaneEdge(edge, startNode, endNode));
-        _graph.AddEdge(edge);
+        _graph.AddDirectedEdge(startNode, endNode);
     }
 
     private IEnumerable<PlaneEdge> MakeEdgePath(IList<Node> path)

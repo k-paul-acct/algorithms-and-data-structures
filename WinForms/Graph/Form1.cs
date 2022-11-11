@@ -3,8 +3,8 @@ namespace Graph;
 public partial class Form1 : Form
 {
     private readonly Drawer _drawer;
-    private bool _moveNode;
     private readonly Plane _plane = new();
+    private bool _moveNode;
     private bool _preAddNode;
     private string _preAddNodeName = string.Empty;
 

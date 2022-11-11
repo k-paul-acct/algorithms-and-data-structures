@@ -13,10 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgorithmsTests", "Algorith
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{412CBB5B-A6E4-46E2-B4E4-B34D7CC5D01A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WinForms", "WinForms", "{275D27E4-88F7-483E-8F96-7D4777F2DAD0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graph", "WinForms\Graph\Graph.csproj", "{450AD28F-F6C1-4669-BE70-C39282A25A99}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,16 +39,11 @@ Global
 		{412CBB5B-A6E4-46E2-B4E4-B34D7CC5D01A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{412CBB5B-A6E4-46E2-B4E4-B34D7CC5D01A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{412CBB5B-A6E4-46E2-B4E4-B34D7CC5D01A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{450AD28F-F6C1-4669-BE70-C39282A25A99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{450AD28F-F6C1-4669-BE70-C39282A25A99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{450AD28F-F6C1-4669-BE70-C39282A25A99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{450AD28F-F6C1-4669-BE70-C39282A25A99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{450AD28F-F6C1-4669-BE70-C39282A25A99} = {275D27E4-88F7-483E-8F96-7D4777F2DAD0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {74E12C0F-7DC5-4CE2-9077-A7FC7E372B22}

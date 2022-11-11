@@ -1,6 +1,4 @@
-﻿using DataStructures;
-
-namespace Graph;
+﻿namespace Graph;
 
 public class PlaneEdge
 {

@@ -4,7 +4,7 @@ namespace AlgorithmsTests;
 
 public class Tests
 {
-    private Graph _graph;
+    private Graph<int> _graph;
 
     [SetUp]
     public void Setup()

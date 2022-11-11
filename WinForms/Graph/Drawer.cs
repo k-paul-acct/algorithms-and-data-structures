@@ -7,8 +7,8 @@ public class Drawer
     private static readonly Pen _edgePen = new(Color.Black, 2);
     private static readonly Pen _visitedEdgePen = new(Color.Red, 2);
     private static readonly Brush _nodeBrush = new SolidBrush(Color.Blue);
-    private int _height;
     private readonly Bitmap _plane;
+    private int _height;
     private int _width;
 
     public Drawer(int width, int height)
