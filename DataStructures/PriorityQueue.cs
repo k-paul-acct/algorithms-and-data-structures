@@ -56,11 +56,7 @@ public class PriorityQueue<TElement, TPriority> where TPriority : IComparable<TP
         var current = _nodes[index];
         while (index < GetFirstLeafIndex())
         {
-            var childIndex = index * 2 + 2 < Count
-                ? _comparer.Compare(_nodes[index * 2 + 1].Priority, _nodes[index * 2 + 2].Priority) < 0
-                    ? index * 2 + 1
-                    : index * 2 + 2
-                : index * 2 + 1;
+            var childIndex = GetHighestPriorityChildIndex(index);
             if (_comparer.Compare(_nodes[childIndex].Priority, current.Priority) < 0)
             {
                 _nodes[index] = _nodes[childIndex];
@@ -75,19 +71,32 @@ public class PriorityQueue<TElement, TPriority> where TPriority : IComparable<TP
         _nodes[index] = current;
     }
 
+    private int GetHighestPriorityChildIndex(int parentIndex)
+    {
+        var res = (parentIndex << 2) + 1;
+        var max = res + 4 < Count ? res + 4 : Count;
+        for (var i = res + 1; i < max; ++i)
+        {
+            if (_comparer.Compare(_nodes[i].Priority, _nodes[res].Priority) < 0)
+                res = i;
+        }
+
+        return res;
+    }
+
     private void Heapify()
     {
-        for (var i = (Count - 1) >> 1; i >= 0; i--) MoveDown(i);
+        for (var i = GetParentIndex(Count - 1); i >= 0; --i) MoveDown(i);
     }
 
     private static int GetParentIndex(int childIndex)
     {
-        return (childIndex - 1) >> 1;
+        return (childIndex - 1) >> 2;
     }
 
     private int GetFirstLeafIndex()
     {
-        return ((Count - 2) >> 1) + 1;
+        return ((Count - 2) >> 2) + 1;
     }
 
     public TElement Peek()
