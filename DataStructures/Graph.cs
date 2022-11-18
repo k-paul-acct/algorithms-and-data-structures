@@ -6,7 +6,7 @@
 /// <typeparam name="T">type of nodes in the graph.</typeparam>
 public class Graph<T> where T : notnull
 {
-    private readonly HashSet<Edge<T>> _edges = new();
+    private readonly HashSet<GraphEdge<T>> _edges = new();
     private readonly Dictionary<T, List<T>> _nodes = new();
 
     /// <summary>
@@ -69,7 +69,7 @@ public class Graph<T> where T : notnull
         return _nodes.Remove(node);
     }
 
-    public IEnumerable<Edge<T>> AdjacencyList(T node)
+    public IEnumerable<GraphEdge<T>> AdjacencyList(T node)
     {
         throw new NotImplementedException();
     }

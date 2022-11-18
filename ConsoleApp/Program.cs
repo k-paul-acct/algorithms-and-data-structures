@@ -1,6 +1,39 @@
 ﻿using Algorithms;
 using DataStructures;
 
+var root =
+    new BinaryTreeNode<string, double>("Flour", 10,
+        new BinaryTreeNode<string, double>("Beer", 20,
+            null,
+            new BinaryTreeNode<string, double>("Butter", 76,
+                new BinaryTreeNode<string, double>("Beet", 81),
+                new BinaryTreeNode<string, double>("Eggs", 129,
+                    new BinaryTreeNode<string, double>("Cabbage", 159)))),
+        new BinaryTreeNode<string, double>("Water", 32,
+            new BinaryTreeNode<string, double>("Milk", 55,
+                null,
+                new BinaryTreeNode<string, double>("Pork", 56))));
+
+var treap = new Treap<string, double>(root);
+
+// treap.Insert("Beef", 15);
+// treap.Insert("Apples", 20);
+
+/*Console.WriteLine("Inorder traversal:");
+foreach (var x in treap.Root.InorderTraversal()) Console.Write(x.Key + " -> ");
+Console.WriteLine();*/
+
+Console.WriteLine("Postorder traversal:");
+foreach (var x in treap.Root.PostorderTraversal()) Console.Write(x.Key + " -> ");
+Console.WriteLine();
+
+/*Console.WriteLine("Preorder traversal:");
+foreach (var x in treap.Root.PreorderTraversal()) Console.Write(x.Key + " -> ");
+Console.WriteLine();*/
+
+// treap.Remove("Cabbage");
+treap.Remove("Butter");
+
 var graph = new Graph<string>();
 
 graph.AddNode("a");

@@ -76,10 +76,8 @@ public class PriorityQueue<TElement, TPriority> where TPriority : IComparable<TP
         var res = (parentIndex << 2) + 1;
         var max = res + 4 < Count ? res + 4 : Count;
         for (var i = res + 1; i < max; ++i)
-        {
             if (_comparer.Compare(_nodes[i].Priority, _nodes[res].Priority) < 0)
                 res = i;
-        }
 
         return res;
     }
@@ -140,6 +138,7 @@ public class PriorityQueue<TElement, TPriority> where TPriority : IComparable<TP
     {
         if (element == null) throw new ArgumentNullException(nameof(element));
         if (newPriority == null) throw new ArgumentNullException(nameof(newPriority));
+
         var index = -1;
         for (var i = 0; i < Count; i++)
         {
