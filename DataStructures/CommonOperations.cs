@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices.ComTypes;
+
 namespace DataStructures;
 
 public static class CommonOperations
@@ -97,7 +99,7 @@ public static class CommonOperations
     /// <param name="x">Tree node to rotate.</param>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TPriority"></typeparam>
-    /// <returns>True if the root of the tree should be updated to parent of x, false otherwise.</returns>
+    /// <returns>True if the root of the tree should be updated to x, false otherwise.</returns>
     /// <exception cref="ArgumentException"></exception>
     public static bool RotateRight<TKey, TPriority>(this BinaryTreeNode<TKey, TPriority> x)
     {
@@ -114,6 +116,10 @@ public static class CommonOperations
             else p.Right = x;
             res = false;
         }
+        else
+        {
+            x.Parent = null;
+        }
 
         y.Left = x.Right;
         x.Right = y;
@@ -127,7 +133,7 @@ public static class CommonOperations
     /// <param name="x"></param>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TPriority"></typeparam>
-    /// <returns>True if the root of the tree should be updated to parent of x, false otherwise.</returns>
+    /// <returns>True if the root of the tree should be updated to x, false otherwise.</returns>
     /// <exception cref="ArgumentException"></exception>
     public static bool RotateLeft<TKey, TPriority>(this BinaryTreeNode<TKey, TPriority> x)
     {
@@ -143,6 +149,10 @@ public static class CommonOperations
             if (p.Left == y) p.Left = x;
             else p.Right = x;
             res = false;
+        }
+        else
+        {
+            x.Parent = null;
         }
 
         y.Right = x.Left;
@@ -168,5 +178,17 @@ public static class CommonOperations
                     continue;
             }
         }
+    }
+
+    /// <summary>
+    ///     Recursive method.
+    /// </summary>
+    /// <param name="node"></param>
+    /// <typeparam name="TKey"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
+    /// <returns></returns>
+    internal static int Height<TKey, TValue>(BinaryTreeNode<TKey, TValue>? node)
+    {
+        return node == null ? -1 : Math.Max(Height(node.Left), Height(node.Right)) + 1;
     }
 }

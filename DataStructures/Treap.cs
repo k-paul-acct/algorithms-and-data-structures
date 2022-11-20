@@ -18,6 +18,11 @@ public class Treap<TKey, TPriority>
 
     public BinaryTreeNode<TKey, TPriority>? Root { get; set; }
 
+    public int Height()
+    {
+        return CommonOperations.Height(Root);
+    }
+
     public TKey Top()
     {
         if (Root == null) throw new InvalidOperationException();
@@ -56,10 +61,10 @@ public class Treap<TKey, TPriority>
         newNode.Parent = parent;
 
         while (newNode.Parent != null && _priorityComparer.Compare(newNode.Value, newNode.Parent.Value) < 0)
-            if (newNode == newNode.Parent.Left) newNode.RotateRight();
-            else newNode.RotateLeft();
-
-        if (newNode.Parent == null) Root = newNode;
+        {
+            var res = newNode == newNode.Parent.Left ? newNode.RotateRight() : newNode.RotateLeft();
+            if (res) Root = newNode;
+        }
     }
 
     public bool Remove(TKey key)

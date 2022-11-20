@@ -15,6 +15,11 @@ var root =
                 new BinaryTreeNode<string, double>("Pork", 56))));
 
 var treap = new Treap<string, double>(root);
+Console.WriteLine(treap.Height());
+
+var rt = new RandomizedTreap<int>();
+for (var i = 0; i < 100; ++i) rt.Insert(Random.Shared.Next());
+Console.WriteLine(rt.Height());
 
 // treap.Insert("Beef", 15);
 // treap.Insert("Apples", 20);
