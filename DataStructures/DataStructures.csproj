@@ -16,4 +16,8 @@
         <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Crypto\Crypto.csproj" />
+    </ItemGroup>
+
 </Project>
