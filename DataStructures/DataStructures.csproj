@@ -6,6 +6,8 @@
         <Nullable>enable</Nullable>
         <LangVersion>11</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <Configurations>Debug;Release</Configurations>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -17,7 +19,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Crypto\Crypto.csproj" />
+      <ProjectReference Include="..\NonCrypto\NonCrypto.csproj" />
     </ItemGroup>
 
 </Project>

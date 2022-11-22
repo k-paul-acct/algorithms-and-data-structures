@@ -1,4 +1,5 @@
-using Crypto;
+using System.Text;
+using NonCrypto;
 
 namespace DataStructures;
 
@@ -8,6 +9,7 @@ public class BloomFilter
     private readonly Func<uint, uint, long>[] _hashFunctions;
     private readonly int _maxSize;
     private readonly int _seed;
+    private const double Ln2 = 0.693147180559945309417232;
 
     public BloomFilter(int maxSize) : this(maxSize, Random.Shared.Next())
     {
@@ -17,7 +19,7 @@ public class BloomFilter
     {
     }
 
-    public BloomFilter(int maxSize, int seed, double maxError = 0.1)
+    public BloomFilter(int maxSize, int seed, double maxError = 0.01)
     {
         static IEnumerable<Func<uint, uint, long>> InitHashFunctions(int hashFunctionsNum, long bitsNum)
         {
@@ -28,8 +30,8 @@ public class BloomFilter
 
         _maxSize = maxSize;
         _seed = seed;
-        var bitsNum = (long)Math.Ceiling(-maxSize * Math.Log(maxError) / Math.Log(2) / Math.Log(2));
-        var hashFunctionsNum = (int)Math.Ceiling(-Math.Log(maxError) / Math.Log(2));
+        var bitsNum = (long)Math.Ceiling(-maxSize * Math.Log(maxError) / Ln2 / Ln2);
+        var hashFunctionsNum = (int)Math.Ceiling(Ln2 * bitsNum / maxSize);
         _bitArray = new BitArray(bitsNum);
         _hashFunctions = InitHashFunctions(hashFunctionsNum, _bitArray.Length).ToArray();
     }
@@ -39,8 +41,9 @@ public class BloomFilter
 
     private IEnumerable<long> GetIndicesByKey(string key)
     {
-        var h1 = Hash.Murmur3_32(key, _seed);
-        var h2 = Hash.Fnv1_32(key);
+        var bytes = Encoding.Default.GetBytes(key);
+        var h1 = Hash.MurmurHash3_X86_32(bytes, _seed);
+        var h2 = Hash.Fnv1_32(bytes);
         return _hashFunctions.Select(x => x(h1, h2));
     }
 
