@@ -1,41 +1,94 @@
+using System.Collections;
+using System.Runtime.CompilerServices;
+
 namespace DataStructures;
 
-public class BitArray
+public sealed class BitArray : ICollection
 {
-    private const byte BitsPerInt = sizeof(int) * 8;
-    private readonly int[] _arr;
+    private readonly uint[] _arr;
 
-    public BitArray(long length)
+    public BitArray(ulong length)
     {
-        var elements = (int)Math.Ceiling((double)length / BitsPerInt);
-        _arr = new int[elements];
-        Length = length;
+        if (length > (ulong)Array.MaxLength << 5) throw new ApplicationException(nameof(length));
+
+        var elements = (int)((length + 31) >> 5);
+        _arr = new uint[elements];
+        Length = (long)length;
+    }
+
+    public bool this[long index]
+    {
+        get => Get(index);
+        set => Set(index, value);
     }
 
     public long Length { get; }
 
-    private static (int ArrIndex, int Offset) GetBitPosition(long index)
+    public IEnumerator GetEnumerator()
     {
-        var arrIndex = (int)(index / BitsPerInt);
-        var offset = (int)(index % BitsPerInt);
-        return (arrIndex, offset);
+        return new BitArrayEnumerator(this);
     }
 
-    public bool GetAt(long index)
+    public void CopyTo(Array array, int index)
     {
-        var (arrIndex, offset) = GetBitPosition(index);
-        return (_arr[arrIndex] & (1 << offset)) > 0;
     }
 
-    public void SetAtTrue(long index)
+    public int Count => (int)Length;
+    public bool IsSynchronized => false;
+    public object SyncRoot => this;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private bool Get(long index)
     {
-        var (arrIndex, offset) = GetBitPosition(index);
-        _arr[arrIndex] |= 1 << offset;
+        return (_arr[index >> 5] & (1U << (int)index)) != 0;
     }
 
-    public void SetAtFalse(long index)
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void Set(long index, bool value)
     {
-        var (arrIndex, offset) = GetBitPosition(index);
-        _arr[arrIndex] &= ~(1 << offset);
+        ref var val = ref _arr[index >> 5];
+        if (value) val |= 1U << (int)index;
+        else val &= ~(1U << (int)index);
+    }
+
+    private sealed class BitArrayEnumerator : IEnumerator
+    {
+        private readonly BitArray _arr;
+        private bool _curr;
+        private long _index;
+
+        public BitArrayEnumerator(BitArray arr)
+        {
+            _arr = arr;
+            _index = -1;
+            _curr = false;
+        }
+
+        public bool MoveNext()
+        {
+            if (_index < _arr.Length - 1)
+            {
+                _index++;
+                _curr = _arr.Get(_index);
+                return true;
+            }
+
+            _index = _arr.Length;
+            return false;
+        }
+
+        public void Reset()
+        {
+            _index = -1;
+        }
+
+        public object Current
+        {
+            get
+            {
+                if (_index == -1 || _index >= _arr.Length) throw new InvalidOperationException();
+                return _curr;
+            }
+        }
     }
 }

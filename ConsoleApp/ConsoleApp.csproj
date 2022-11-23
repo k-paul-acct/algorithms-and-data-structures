@@ -7,19 +7,22 @@
         <Nullable>enable</Nullable>
         <LangVersion>11</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <Configurations>Debug;Release</Configurations>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+        <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+        <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Algorithms\Algorithms.csproj" />
-        <ProjectReference Include="..\DataStructures\DataStructures.csproj" />
+        <ProjectReference Include="..\Algorithms\Algorithms.csproj"/>
+        <ProjectReference Include="..\NonCrypto\NonCrypto.csproj"/>
+        <ProjectReference Include="..\DataStructures\DataStructures.csproj"/>
     </ItemGroup>
 
 </Project>

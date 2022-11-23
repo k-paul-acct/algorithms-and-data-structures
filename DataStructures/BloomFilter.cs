@@ -5,11 +5,11 @@ namespace DataStructures;
 
 public class BloomFilter
 {
+    private const double Ln2 = 0.693147180559945309417232;
     private readonly BitArray _bitArray;
     private readonly Func<uint, uint, long>[] _hashFunctions;
     private readonly int _maxSize;
     private readonly int _seed;
-    private const double Ln2 = 0.693147180559945309417232;
 
     public BloomFilter(int maxSize) : this(maxSize, Random.Shared.Next())
     {
@@ -32,7 +32,7 @@ public class BloomFilter
         _seed = seed;
         var bitsNum = (long)Math.Ceiling(-maxSize * Math.Log(maxError) / Ln2 / Ln2);
         var hashFunctionsNum = (int)Math.Ceiling(Ln2 * bitsNum / maxSize);
-        _bitArray = new BitArray(bitsNum);
+        _bitArray = new BitArray((ulong)bitsNum);
         _hashFunctions = InitHashFunctions(hashFunctionsNum, _bitArray.Length).ToArray();
     }
 
@@ -49,14 +49,14 @@ public class BloomFilter
 
     public bool Contains(string key)
     {
-        return GetIndicesByKey(key).All(i => _bitArray.GetAt(i));
+        return GetIndicesByKey(key).All(i => _bitArray[i]);
     }
 
     public void Insert(string key)
     {
         var indices = GetIndicesByKey(key).ToArray();
-        if (indices.All(i => _bitArray.GetAt(i))) return;
-        foreach (var index in indices) _bitArray.SetAtTrue(index);
+        if (indices.All(i => _bitArray[i])) return;
+        foreach (var index in indices) _bitArray[index] = true;
         Count += 1;
     }
 }

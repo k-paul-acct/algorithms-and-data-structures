@@ -19,7 +19,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\NonCrypto\NonCrypto.csproj" />
+        <ProjectReference Include="..\NonCrypto\NonCrypto.csproj"/>
     </ItemGroup>
 
 </Project>

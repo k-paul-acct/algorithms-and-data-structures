@@ -2,25 +2,24 @@
 
 public class PriorityQueueTests
 {
-    private DataStructures.PriorityQueue<string, int> _pq = null!;
+    private DataStructures.PriorityQueue<string, int> _pq;
 
-    [SetUp]
-    public void Setup()
+    public PriorityQueueTests()
     {
         _pq = new DataStructures.PriorityQueue<string, int>();
     }
 
-    [Test]
+    [Fact]
     public void EnqueueOnce()
     {
-        Assert.That(_pq, Is.Empty);
+        Assert.Equal(_pq.Count, 0);
 
         _pq.Enqueue("q", 1);
 
-        Assert.That(_pq, Has.Count.EqualTo(1));
+        Assert.Equal(_pq.Count, 1);
     }
 
-    [Test]
+    [Fact]
     public void EnqueueMany()
     {
         _pq.Enqueue("q", 1);
@@ -28,19 +27,19 @@ public class PriorityQueueTests
         _pq.Enqueue("e", 4);
         _pq.Enqueue("r", 6);
 
-        Assert.That(_pq, Has.Count.EqualTo(4));
+        Assert.Equal(_pq.Count, 4);
     }
 
-    [Test]
+    [Fact]
     public void EnqueueOnceAndDequeueGivesCountZero()
     {
         _pq.Enqueue("q", 1);
         _pq.Dequeue();
 
-        Assert.That(_pq, Is.Empty);
+        Assert.Equal(_pq.Count, 0);
     }
 
-    [Test]
+    [Fact]
     public void EnqueueManyAndDequeueSameGivesCountZero()
     {
         _pq.Enqueue("q", 4);
@@ -55,10 +54,10 @@ public class PriorityQueueTests
         _pq.Dequeue();
         _pq.Dequeue();
 
-        Assert.That(_pq, Is.Empty);
+        Assert.Equal(_pq.Count, 0);
     }
 
-    [Test]
+    [Fact]
     public void EnqueueWithManyItemsAndDequeueSame()
     {
         _pq = new DataStructures.PriorityQueue<string, int>(new List<(string, int)>
@@ -71,23 +70,23 @@ public class PriorityQueueTests
             ("y", 4)
         });
 
-        Assert.That(_pq.Dequeue(), Is.EqualTo("w"));
-        Assert.That(_pq.Dequeue(), Is.EqualTo("r"));
-        Assert.That(_pq.Dequeue(), Is.EqualTo("e"));
-        Assert.That(_pq.Dequeue(), Is.EqualTo("y"));
-        Assert.That(_pq.Dequeue(), Is.EqualTo("q"));
-        Assert.That(_pq.Dequeue(), Is.EqualTo("t"));
+        Assert.Equal(_pq.Dequeue(), "w");
+        Assert.Equal(_pq.Dequeue(), "r");
+        Assert.Equal(_pq.Dequeue(), "e");
+        Assert.Equal(_pq.Dequeue(), "y");
+        Assert.Equal(_pq.Dequeue(), "q");
+        Assert.Equal(_pq.Dequeue(), "t");
     }
 
-    [Test]
+    [Fact]
     public void EnqueueOnceAndDequeueOnce()
     {
         _pq.Enqueue("q", 1);
 
-        Assert.That(_pq.Dequeue(), Is.EqualTo("q"));
+        Assert.Equal(_pq.Dequeue(), "q");
     }
 
-    [Test]
+    [Fact]
     public void DequeueMoreThanEnqueue()
     {
         _pq.Enqueue("a", 0);
@@ -98,10 +97,10 @@ public class PriorityQueueTests
         _pq.Dequeue();
         _pq.Dequeue();
 
-        Assert.That(() => _pq.Dequeue(), Throws.InvalidOperationException);
+        Assert.Throws<InvalidOperationException>(() => _pq.Dequeue());
     }
 
-    [Test]
+    [Fact]
     public void CreateWithInitialItems()
     {
         _pq = new DataStructures.PriorityQueue<string, int>(new List<(string, int)>
@@ -114,7 +113,7 @@ public class PriorityQueueTests
             ("y", 4)
         });
 
-        Assert.That(_pq, Has.Count.EqualTo(6));
+        Assert.Equal(_pq.Count, 6);
 
         _pq.Dequeue();
         _pq.Dequeue();
@@ -123,10 +122,10 @@ public class PriorityQueueTests
         _pq.Dequeue();
         _pq.Dequeue();
 
-        Assert.That(_pq, Is.Empty);
+        Assert.Equal(_pq.Count, 0);
     }
 
-    [Test]
+    [Fact]
     public void EnqueueManyAndDequeueSame()
     {
         _pq.Enqueue("q", 3);
@@ -136,15 +135,15 @@ public class PriorityQueueTests
         _pq.Enqueue("t", 4);
         _pq.Enqueue("y", 9);
 
-        Assert.That(_pq.Dequeue(), Is.EqualTo("w"));
-        Assert.That(_pq.Dequeue(), Is.EqualTo("e"));
-        Assert.That(_pq.Dequeue(), Is.EqualTo("q"));
-        Assert.That(_pq.Dequeue(), Is.EqualTo("t"));
-        Assert.That(_pq.Dequeue(), Is.EqualTo("r"));
-        Assert.That(_pq.Dequeue(), Is.EqualTo("y"));
+        Assert.Equal(_pq.Dequeue(), "w");
+        Assert.Equal(_pq.Dequeue(), "e");
+        Assert.Equal(_pq.Dequeue(), "q");
+        Assert.Equal(_pq.Dequeue(), "t");
+        Assert.Equal(_pq.Dequeue(), "r");
+        Assert.Equal(_pq.Dequeue(), "y");
     }
 
-    [Test]
+    [Fact]
     public void Clear()
     {
         _pq.Enqueue("q", 3);
@@ -156,14 +155,14 @@ public class PriorityQueueTests
 
         _pq.Clear();
 
-        Assert.That(_pq, Is.Empty);
+        Assert.Equal(_pq.Count, 0);
 
         _pq.Enqueue("a", 1);
 
-        Assert.That(_pq, Has.Count.EqualTo(1));
+        Assert.Equal(_pq.Count, 1);
     }
 
-    [Test]
+    [Fact]
     public void Peek()
     {
         _pq.Enqueue("q", 3);
@@ -171,12 +170,12 @@ public class PriorityQueueTests
         _pq.Enqueue("r", 6);
         _pq.Enqueue("w", 1);
 
-        Assert.That(() => _pq.Dequeue(), Is.EqualTo("w"));
+        Assert.Equal(_pq.Dequeue(), "w");
     }
 
-    [Test]
+    [Fact]
     public void PeekOnEmpty()
     {
-        Assert.That(() => _pq.Dequeue(), Throws.InvalidOperationException);
+        Assert.Throws<InvalidOperationException>(() => _pq.Dequeue());
     }
 }

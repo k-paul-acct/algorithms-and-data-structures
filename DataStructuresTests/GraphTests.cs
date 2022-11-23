@@ -2,26 +2,24 @@ namespace DataStructuresTests;
 
 public class GraphTests
 {
-    private Graph<string> _graph = null!;
+    private readonly Graph<string> _graph;
 
-    [SetUp]
-    public void Setup()
+    public GraphTests()
     {
         _graph = new Graph<string>();
     }
 
-    [Test]
+    [Fact]
     public void AddSameNode()
     {
-        var s = "a";
-        _graph.AddNode(s);
-        Assert.Throws<ArgumentException>(() => _graph.AddNode(s));
+        _graph.AddNode("a");
+        Assert.Throws<ArgumentException>(() => _graph.AddNode("a"));
     }
 
-    [Test]
+    [Fact]
     public void AddNodeWithSameName()
     {
-        _graph.AddNode("A");
-        Assert.DoesNotThrow(() => _graph.AddNode("A"));
+        var exception = Record.Exception(() => _graph.AddNode("A"));
+        Assert.Null(exception);
     }
 }
